@@ -1,20 +1,51 @@
-local writeTextNumber = 0 -- Don't change this at any point.
+local writeTextNumber = 0 -- Don't change this at any point. I mean, you probably could at any point if you wanted to, but you shouldn't.
 local text_original = LocalizationManager.text -- Don't change this either.
 local printStrings = true -- This will output all strings to a text file if true.
 local sillyTrans = true -- It's memeday, fellas!
 local fixedTrans = true -- Fix errors in English.
-local hideTrans = true -- Shorten or remove superfluous text.
+local shortTrans = true -- Shorten or remove superfluous text.
+local ratsSucks = false -- Modifies some of Bain's subtitles so that the ingredients are always correct.
 local testAllStrings = 0 -- Change this number if you want help for finding string_ids so that you can replace them.
 -- turning testAllStrings to 1 will set all unknown strings to their string_id. For example, Dallas's name will show up as "menu_russian".
 -- turning testAllStrings to 2 will show the stringid with the actual string next to it. Dallas will show up as "menu_russian: Dallas"
 -- Setting it to 2 will turn the gui into an absolute clusterfuck, so make sure you actually know how to navigate the menus beforehard!
 
+--Anything in this table will not be exported to stringdump.txt.
+local noExportTable = {
+	"hud_gage_assignment_progress",
+	"prop_timer_gui_seconds",
+	"prop_timer_gui_malfunction",
+	"prop_timer_gui_error",
+	"hud_day_payout",
+	"hud_days_title",
+	"hud_bonus_bags_payout",
+	"hud_bonus_bags",
+	"hud_potential_xp",
+	"hud_objective",
+	"hud_secured_loot",
+	"hud_mission_bags",
+	"hud_assault_end_line",
+	""}
+	
+local ratsAcidTable = {"pln_rats_stage1_20_any_01", "pln_rt1_20_any_01", "pln_rt1_20_any_02", "pln_rt1_20_any_03", "pln_rt1_20_any_04", "pln_rt1_20_any_05", "pln_rt1_20_any_06", "pln_rt1_20_any_07", "pln_rt1_20_any_08", "pln_rt1_20_any_09", "pln_rt1_20_any_10"}
+	
+local ratsSodaTable = {"pln_rats_stage1_22_any_01", "pln_rt1_22_any_01", "pln_rt1_22_any_02", "pln_rt1_22_any_03", "pln_rt1_22_any_04", "pln_rt1_22_any_05", "pln_rt1_22_any_06", "pln_rt1_22_any_07", "pln_rt1_22_any_08", "pln_rt1_22_any_09", "pln_rt1_22_any_10"}
+
+local ratsChloTable = {"pln_rats_stage1_24_any_01", "pln_rt1_24_any_01", "pln_rt1_24_any_02", "pln_rt1_24_any_03", "pln_rt1_24_any_04", "pln_rt1_24_any_05", "pln_rt1_24_any_06", "pln_rt1_24_any_07", "pln_rt1_24_any_08", "pln_rt1_24_any_09", "pln_rt1_24_any_10"}
+
 function LocalizationManager:text(string_id, ...)
 	return (string_id == "hud_assault_assault" and sillyTrans == true) and "stealthfags getting btfo"
 	-- Add lines in the same format as these. The first is the string_id, and the second is what the string should show up as. The "or" is important.
-	or (string_id == "menu_jowi" and hideTrans == true) and "Wick"
+	or (string_id == "menu_jowi" and shortTrans == true) and "Wick"
 	or (string_id == "menu_l_lootscreen" and sillyTrans == true) and "Guys, the cards, go pick one."
 	or (string_id == "hud_casing_mode_ticker" and sillyTrans == true) and "do we do this stelath?"
+	or (string_id == "menu_ghostable_stage" and sillyTrans == true) and "stealth???"
+	or (string_id == "hud_offshore_account" and sillyTrans == true) and "bitcoins"
+	
+	--Rats / Cook Off
+	or (inTable(ratsAcidTable, string_id) and ratsSucks == true) and "Add muriatic acid to continue the process!"
+	or (inTable(ratsSodaTable, string_id) and ratsSucks == true) and "Add caustic soda to continue the process!"
+	or (inTable(ratsChloTable, string_id) and ratsSucks == true) and "Add hydrogen chloride to continue the process!"
 	
 	--Mallcrasher
 	or (string_id == "hud_v_mallcrasher_mission1_hl" and sillyTrans == true) and "Guys, the mall, go enter it."
@@ -77,31 +108,38 @@ function LocalizationManager:text(string_id, ...)
 	or (string_id == "bm_msk_anonymous" and fixedTrans == true) and "le 4chan man"
 	or (string_id == "bm_msk_skulloverkillplus" and sillyTrans == true) and "I cheat at video games"
 	
-	or (string_id == "cn_menu_downtown_title" and hideTrans == true) and ""
-	or (string_id == "cn_menu_foggy_bottom_title" and hideTrans == true) and ""
-	or (string_id == "cn_menu_georgetown_title" and hideTrans == true) and ""
-	or (string_id == "cn_menu_shaw_title" and hideTrans == true) and ""
-	or (string_id == "cn_menu_westend_title" and hideTrans == true) and ""
+	or (string_id == "cn_menu_downtown_title" and shortTrans == true) and ""
+	or (string_id == "cn_menu_foggy_bottom_title" and shortTrans == true) and ""
+	or (string_id == "cn_menu_georgetown_title" and shortTrans == true) and ""
+	or (string_id == "cn_menu_shaw_title" and shortTrans == true) and ""
+	or (string_id == "cn_menu_westend_title" and shortTrans == true) and ""
 	
-	or (string_id == "cn_menu_pro_job" and hideTrans == true) and "Pro"
-	or (string_id == "cn_menu_community" and hideTrans == true) and "Group"
-	or (string_id == "cn_menu_dlc" and hideTrans == true) and "DLC"
+	or (string_id == "cn_menu_pro_job" and shortTrans == true) and "Pro"
+	or (string_id == "cn_menu_community" and shortTrans == true) and "Group"
+	or (string_id == "cn_menu_dlc" and shortTrans == true) and "DLC"
 	
 	or (string_id == "menu_l_global_value_infamous" and sillyTrans == true) and "You cheated for this!"
 	or (string_id == "menu_success" and sillyTrans == true) and "You're winner!"
+	or (string_id == "message_obtained_equipment" and sillyTrans == true) and "get equipped with:"
+	or (string_id == "hud_carry_lance_bag" and sillyTrans == true) and "broke-dick piece-of-shit drill"
 	
 	--misc. gui shit
 	or (string_id == "menu_visit_forum3" and sillyTrans == true) and "it's memeday fellas!"
-	or (string_id == "menu_or_press_any_xbox_button" and hideTrans == true) and ""
+	or (string_id == "menu_or_press_any_xbox_button" and shortTrans == true) and ""
+	
+	--if these aren't part of the script, they're going to spam the shit out of stringdump.txt, so let's fix that
+	--some of them aren't possible to replace with this script unless we can figure out what variables these strings reference, such as player names
+	--in theory you could probably fix this, but it isn't worth the time.
+	or inTable(noExportTable, string_id) and pass_to_original(true, self, string_id, ...)
 	
 	--unknown strings
 	or testAllStrings == 1 and string_id
-	or testAllStrings == 2 and string_id .. ": " .. pass_to_original(self, string_id, ...)
-	or pass_to_original(self, string_id, ...)
+	or testAllStrings == 2 and string_id .. ": " .. pass_to_original(false, self, string_id, ...)
+	or pass_to_original(false, self, string_id, ...)
 end
 
-function pass_to_original(self, string_id, ...)
-	if printStrings == true then
+function pass_to_original(dontWrite, self, string_id, ...)
+	if printStrings == true and not dontWrite then
 		string_print(string_id, text_original(self, string_id, ...))
 	end
 	return text_original(self, string_id, ...)
@@ -112,4 +150,11 @@ function string_print(string_id, string_original)
 	file:write(writeTextNumber .. "th line of text to translate... \n" .. string_id .. "\n" .. string_original .. "\n\n")
 	writeTextNumber = writeTextNumber +1
     file:close()
+end
+
+function inTable(tbl, item)
+    for key, value in pairs(tbl) do
+        if value == item then return true end
+    end
+    return false
 end
