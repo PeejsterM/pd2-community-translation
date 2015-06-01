@@ -2,7 +2,6 @@
 A community-driven translation script for PAYDAY 2.
 At present, the following features exist:
 > Translation!
-> Cooking Meth for Dummies
 > Script exports text to stringdump.txt
 
 To use this in your game, postrequire this script to lib/managers/localizationmanager. 
