@@ -1,0 +1,15 @@
+noExportTable = {
+	"hud_gage_assignment_progress",
+	"prop_timer_gui_seconds",
+	"prop_timer_gui_malfunction",
+	"prop_timer_gui_error",
+	"hud_day_payout",
+	"hud_days_title",
+	"hud_bonus_bags_payout",
+	"hud_bonus_bags",
+	"hud_potential_xp",
+	"hud_objective",
+	"hud_secured_loot",
+	"hud_mission_bags",
+	"hud_assault_end_line",
+	""}
