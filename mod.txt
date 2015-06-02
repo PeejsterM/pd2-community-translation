@@ -7,7 +7,7 @@
     "hooks" : [
         {
             "hook_id" : "lib/managers/localizationmanager",
-            "script_path" : "translator.lua"
+            "script_path" : "translation.lua"
         },
         {
             "hook_id" : "lib/managers/localizationmanager",
