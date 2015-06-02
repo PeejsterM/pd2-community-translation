@@ -4,16 +4,8 @@ At present, the following features exist:
 > Translation!
 > Script exports text to stringdump.txt
 
-To use this in your game, postrequire this script to lib/managers/localizationmanager. 
-
-If you are not running any scripts at all, download the script hook and replace the contents of your PD2hook.yml file with the following.
-
-Config:
-  OutputMode: 1
-  OutputFile: PD2Hook.log
-  PrintOffsets: false
-  ExtraCols: 10
-  ExtraRows: 10
-PostRequireScripts:
-  - ['lib/managers/localizationmanager', relative\path\to\this\file.lua]
-  
+To-do:
+Figure out BLT menus.
+Make a full documentation.
+Come up with a way to export a list of strings via keybind.
+Figure out how to make macros work with custom strings.
