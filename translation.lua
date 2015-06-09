@@ -1,7 +1,5 @@
-local writeTextNumber = 0 -- Don't change this at any point. I mean, you probably could at any point if you wanted to, but you shouldn't.
-local writeMacroNumber = 0 -- this too.
 local text_original = LocalizationManager.text -- Don't change this either.
-local printStrings = true -- This will output all strings to a text file if true.
+local printStrings = true -- This will output strings to text files inside the "translation" folder in your PAYDAY 2 directory.
 
 local useSillyTrans = true -- It's memeday, fellas!
 local useFixedTrans = true -- Fix errors in grammar, orthography, or things that are just plain wrong.
@@ -11,6 +9,7 @@ local useGame_Trans = true -- Separate from FixedTrans, this table should be use
 local useOtherTrans = true -- None of the above.
 
 local parseMacros = true -- If true, macros display normally. If false, they display as $MACRO_NAME;.
+local writeMacros = false -- if false, change macros for a split second so that they display as $MACRO_NAME; when writing to stringdump.txt
 
 local testAllStrings = 0 --[[
 Change this number if you want help for finding string_ids so that you can replace them.
@@ -21,7 +20,10 @@ Setting it to 2 will turn the gui into an absolute clusterfuck, so make sure you
 
 --the BLT hook doesn't handle localization changes in a way that allows us to use testAllStrings, so instead of using the BLT-friendly method, we are going to overwrite PAYDAY 2's localization function.
 function LocalizationManager:text(string_id, macros)
-	if inTable(noExportTable, string_id) then pass_to_original(true, self, string_id, macros) end
+	if noExportTable[string_id] == true then
+		pass_to_original(false, self, string_id, macros)
+		--I might do something with indices on the no export table that are set to values other than true, but right now I don't think it'll do anything useful.
+	end
 
 	--unknown strings
 	if (useSillyTrans == true and sillyTransTable[string_id]) then return sillyTransTable[string_id] end
@@ -32,46 +34,17 @@ function LocalizationManager:text(string_id, macros)
 	if (useOtherTrans == true and otherTransTable[string_id]) then return otherTransTable[string_id] end
 	
 	--we don't yet have this string in any of our lists, so we're going to try testAllStrings
-	if (testAllStrings == 0) then return pass_to_original(false, self, string_id, macros) end
 	if (testAllStrings == 1) then return string_id end
-	if (testAllStrings == 2) then return string_id .. ": " .. pass_to_original(false, self, string_id, macros) end
+	if (testAllStrings == 2) then return string_id .. ": " .. pass_to_original(true, self, string_id, macros) end
+	
+	--Fallback.
+	return pass_to_original(true, self, string_id, macros)
 end
 
-function LocalizationManager:_localizer_post_process( string )
-	local localized_string = string
-	local macros = {}
-
-	--
-	if( type(self._macro_context) ~= "table" ) then
-		self._macro_context = {}
-	end
-	
-	--
-	for k, v in pairs( self._default_macros ) do
-		macros[k] = v
-	end
-	
-	-- Build a table of all the macros we want to replace
-	for k, v in pairs( self._macro_context ) do
-		macros["$"..k..";"] = tostring(v)
-	end
-
-	-- Is this usefull
-	if self._pre_process_func then
-		self._pre_process_func( macros )
-	end
-	
-	if (parseMacros == true) then
-		localized_string = string.gsub( localized_string, "%b$;", macros )		--search for words that start with $ and ends with ; matching macros(table) key and replace with macros value for that key
-	end
-
-	return localized_string
-end
-
-function pass_to_original(dontWrite, self, string_id, macros)
-	if printStrings == true and not dontWrite then
+function pass_to_original(writeThis, self, string_id, macros)
+	if printStrings == true and writeThis then
 		local _parseMacros = parseMacros
-		parseMacros = false
+		parseMacros = writeMacros
 		string_print(string_id, text_original(self, string_id, macros))
 		parseMacros = _parseMacros
 	end
@@ -79,16 +52,7 @@ function pass_to_original(dontWrite, self, string_id, macros)
 end
 
 function string_print(string_id, string_original, macros)
-    local file = io.open("stringdump.txt", "a")
-	file:write(writeTextNumber .. "th line of text to translate! \n" .. string_id .. "\n" .. string_original .. "\n\n")
-	--file:write(writeTextNumber .. "th line of text to translate! \n" .. string_id .. " MACRO: " .. macros .. "\n" .. string_original .. "\n\n")
-	writeTextNumber = writeTextNumber +1
-    file:close()
-end
-
-function inTable(tbl, item)
-    for key, value in pairs(tbl) do
-        if value == item then return true end
-    end
-    return false
+	local export = io.open("translation/" .. string_id .. ".txt", "w")
+	export:write(string_original)
+	export:close()
 end
