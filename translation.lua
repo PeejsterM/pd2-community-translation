@@ -1,12 +1,12 @@
-local printStrings = false -- This will output strings to text files inside the "translation" folder in your PAYDAY 2 directory.
+--######################################################################################################################################################
+--#
+--# Change "false" here to "true" to enable the exporting of strings.
+--#
+--######################################################################################################################################################
 
-local useSillyTrans = true -- It's memeday, fellas!
-local useFixedTrans = true -- Fix errors in grammar, orthography, or things that are just plain wrong.
-local useShortTrans = true -- Shorten or remove superfluous text.
-local useReal_Trans = true -- Use this table if you want to actually translate something from English. I probably won't use this, but it's good to have it anyway.
-local useGame_Trans = true -- Separate from FixedTrans, this table should be used for anything that gets game mechanics wrong.
-local useOtherTrans = true -- None of the above.
+local printStrings = false
 
+translationTable = {}
 --the BLT hook doesn't handle localization changes in a way that allows us to use testAllStrings, so instead of using the BLT-friendly method, we are going to overwrite PAYDAY 2's localization function.
 function LocalizationManager:text(string_id, macros)
 	local export = nil
@@ -25,39 +25,14 @@ function LocalizationManager:text(string_id, macros)
 		str_id = string_id
 	end
 	
-	--Check each of our translation tables.
+	--Check out our translations.
 	
-	if utsTransTable[string_id] then
-		return_string = utsTransTable[string_id]
+	if translationTable[str_id] then
 		utsLocalizedThis = true
-	end
-	
-	if (useSillyTrans == true and sillyTransTable[string_id]) then
-		return_string = sillyTransTable[string_id]
-		utsLocalizedThis = true
-	end
-	if (useFixedTrans == true and fixedTransTable[string_id]) then
-		return_string = fixedTransTable[string_id]
-		utsLocalizedThis = true
-	end
-	if (useShortTrans == true and shortTransTable[string_id]) then
-		return_string = shortTransTable[string_id]
-		utsLocalizedThis = true
-	end
-	if (useReal_Trans == true and real_TransTable[string_id]) then
-		return_string = real_TransTable[string_id]
-		utsLocalizedThis = true
-	end
-	if (useGame_Trans == true and game_TransTable[string_id]) then
-		return_string = game_TransTable[string_id]
-		utsLocalizedThis = true
-	end
-	if (useOtherTrans == true and otherTransTable[string_id]) then
-		return_string = otherTransTable[string_id]
-		utsLocalizedThis = true
+		return_string = translationTable[str_id]
 	end
 	
-	--BLT Fallback.
+	--BLT fallback.
 	
 	if self._custom_localizations[string_id] then
 		return_string = self._custom_localizations[string_id]
