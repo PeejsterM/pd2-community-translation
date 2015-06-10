@@ -71,8 +71,8 @@ function LocalizationManager:text(string_id, macros)
 	
 	if self._custom_localizations[string_id] then
 		return_string = self._custom_localizations[string_id]
+		bltLocalizedThis = true
 		if macros and type(macros) == "table" then
-			bltLocalizedThis = true
 			for k, v in pairs( macros ) do
 				return_string = return_string:gsub( "$" .. k, v )
 			end
