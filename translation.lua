@@ -71,7 +71,7 @@ function LocalizationManager:text(string_id, macros)
 	
 	--String hasn't been translated by BLT or by UTS, so let's export it if that option is available to us.
 	
-	if printStrings == true and not (utsLocalizedThis or bltLocalizedThis) and noExportTable[string_id] then
+	if printStrings == true and not (utsLocalizedThis or bltLocalizedThis) and not noExportTable[string_id] then
 		export = io.open("translation/" .. string_id .. ".txt", "w")
 		export:write(Localizer:lookup( Idstring(string_id)))
 	end
