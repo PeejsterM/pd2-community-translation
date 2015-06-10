@@ -13,12 +13,13 @@ real_TransTable["example string_id"] = "example text"
 game_TransTable["example string_id"] = "example text"
 otherTransTable["example string_id"] = "example text"
 
-sillyTransTable["hud_assault_assault"] = "stealthfags getting btfo"
+sillyTransTable["hud_assault_assault"] = "better hide stealthbabby"
 shortTransTable["menu_jowi"] = "Wick"
 sillyTransTable["menu_l_lootscreen"] = "Guys, the cards, go pick one."
 sillyTransTable["hud_casing_mode_ticker"] = "do we do this stelath?"
 sillyTransTable["menu_ghostable_stage"] = "stealth???"
 sillyTransTable["hud_offshore_account"] = "bitcoins"
+sillyTransTable["menu_cash"] = "lods of emone: $money;"
 	
 --Mallcrasher
 sillyTransTable["hud_v_mallcrasher_mission1_hl"] = "Guys, the mall, go enter it."
