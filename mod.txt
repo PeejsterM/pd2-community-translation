@@ -3,7 +3,7 @@
     "description" : "Allows you to extract and modify strings in the game.",
     "author" : "PeejsterM",
     "contact" : "http://steamcommunity.com/id/PeejsterM",
-    "version" : "6",
+    "version" : "7",
     "hooks" : [
         {
         "hook_id" : "lib/managers/localizationmanager",
