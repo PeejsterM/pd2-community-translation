@@ -7,13 +7,6 @@ local useReal_Trans = true -- Use this table if you want to actually translate s
 local useGame_Trans = true -- Separate from FixedTrans, this table should be used for anything that gets game mechanics wrong.
 local useOtherTrans = true -- None of the above.
 
-local testAllStrings = 0 --[[
-Change this number if you want help for finding string_ids so that you can replace them.
-turning testAllStrings to 1 will set all unknown strings to their string_id. For example, Dallas's name will show up as "menu_russian".
-turning testAllStrings to 2 will show the stringid with the actual string next to it. Dallas will show up as "menu_russian: Dallas"
-Setting it to 2 will turn the gui into an absolute clusterfuck, so make sure you actually know how to navigate the menus beforehard!
-]]
-
 --the BLT hook doesn't handle localization changes in a way that allows us to use testAllStrings, so instead of using the BLT-friendly method, we are going to overwrite PAYDAY 2's localization function.
 function LocalizationManager:text(string_id, macros)
 	local export = nil
