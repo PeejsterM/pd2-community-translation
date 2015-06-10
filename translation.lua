@@ -1,4 +1,4 @@
-local printStrings = true -- This will output strings to text files inside the "translation" folder in your PAYDAY 2 directory.
+local printStrings = false -- This will output strings to text files inside the "translation" folder in your PAYDAY 2 directory.
 
 local useSillyTrans = true -- It's memeday, fellas!
 local useFixedTrans = true -- Fix errors in grammar, orthography, or things that are just plain wrong.
@@ -6,9 +6,6 @@ local useShortTrans = true -- Shorten or remove superfluous text.
 local useReal_Trans = true -- Use this table if you want to actually translate something from English. I probably won't use this, but it's good to have it anyway.
 local useGame_Trans = true -- Separate from FixedTrans, this table should be used for anything that gets game mechanics wrong.
 local useOtherTrans = true -- None of the above.
-
-local parseMacros = true -- If true, macros display normally. If false, they display as $MACRO_NAME;.
-local writeMacros = false -- if false, change macros for a split second so that they display as $MACRO_NAME; when writing to stringdump.txt
 
 local testAllStrings = 0 --[[
 Change this number if you want help for finding string_ids so that you can replace them.
